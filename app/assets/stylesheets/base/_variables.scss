@@ -1,0 +1,25 @@
+// Paleta (gris moderno + acentos)
+$brand-bg: #0f172a; // slate-900
+$brand-card: #111827; // gray-900
+$brand-soft: #1f2937; // gray-800
+$brand-border: #293145; // slate-700
+$brand-text: #e5e7eb; // gray-200
+$brand-muted: #94a3b8; // slate-400
+$brand-primary: #6366f1; // indigo-500
+$brand-primary-10: rgba(99, 102, 241, 0.1);
+$brand-success: #22c55e;
+$brand-danger: #ef4444;
+$brand-warning: #f59e0b;
+
+// Radios/sombras
+$radius-2xl: 1.25rem;
+$shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.25);
+$shadow-inset: inset 0 1px 0 rgba(255,255,255,0.04);
+
+// Tipografía (opcional Google Fonts)
+// En tu layout <head> podrías añadir:
+// <link rel="preconnect" href="https://fonts.googleapis.com">
+// <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}

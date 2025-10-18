@@ -1,10 +1,11 @@
 <div class="container py-4">
-  <div class="d-flex justify-content-between align-items-center">
-    <h1><%= @list.name %></h1>
-    <%= link_to "Back", lists_path, class: "btn btn-light" %>
+  <div class="page-hero d-flex justify-content-between align-items-center">
+    <h1 class="hero-title mb-0"><%= @list.name %></h1>
+    <div class="hero-actions d-flex gap-2">
+      <%= link_to "Back to lists", lists_path, class: "btn btn-light" %>
+      <%= link_to "New list", new_list_path, class: "btn btn-primary" %>
+    </div>
   </div>
-
-  <hr/>
 
   <h4 class="mb-3">Movies in this list</h4>
 
@@ -13,38 +14,91 @@
       <% @list.bookmarks.includes(:movie).each do |bookmark| %>
         <% movie = bookmark.movie %>
         <div class="col-md-6 col-lg-4">
-          <div class="card h-100">
-            <% if movie.poster_url.present? %>
-              <img src="<%= movie.poster_url %>" class="card-img-top" alt="<%= movie.title %> poster">
-            <% end %>
-            <div class="card-body d-flex flex-column">
+          <div class="card movie-card h-100">
+            <%# ... %>
+            <div class="card-body">
               <h5 class="card-title"><%= movie.title %></h5>
-              <p class="card-text text-muted"><%= movie.overview %></p>
-              <p class="card-text"><strong>Rating:</strong> <%= movie.rating %></p>
-              <p class="card-text"><em>Note:</em> <%= bookmark.comment %></p>
+              <% if movie.rating.present? %>
+                <div class="rating-badge mb-2">
+                  ⭐ <span><%= movie.rating %>/10</span>
+                </div>
+              <% end %>
+              <p class="card-text"><%= movie.overview %></p>
+              <p class="note"><strong>Note:</strong> <%= bookmark.comment %></p>
               <%= link_to "Remove", bookmark_path(bookmark),
-                          data: { turbo_method: :delete, turbo_confirm: "Remove this bookmark?" },
-                          class: "btn btn-sm btn-outline-danger mt-auto" %>
+                  data: { turbo_method: :delete, turbo_confirm: "Remove this bookmark?" },
+                  class: "btn btn-sm btn-outline-danger mt-auto" %>
             </div>
           </div>
         </div>
       <% end %>
     </div>
   <% else %>
-    <p class="text-muted">No movies yet in this list.</p>
+    <div class="form-card">No movies yet in this list.</div>
   <% end %>
 
-  <hr class="my-4"/>
+  <div class="divider"></div>
 
-  <div class="col-md-6">
-    <h4>Add a movie</h4>
-    <%= simple_form_for [@list, @bookmark] do |f| %>
-      <%= f.input :movie_id, as: :select,
-                  collection: Movie.order(:title),
-                  label_method: :title, value_method: :id,
-                  include_blank: "Choose a movie" %>
-      <%= f.input :comment, placeholder: "Why is this movie here?", hint: "At least 6 characters." %>
-      <%= f.submit "Add bookmark", class: "btn btn-primary" %>
-    <% end %>
+  <div class="row">
+    <div class="col-lg-6">
+      <h4 class="mb-3">Add a movie</h4>
+      <div class="form-card">
+        <%= simple_form_for [@list, @bookmark] do |f| %>
+          <%= f.input :movie_id, as: :select, collection: Movie.order(:title),
+                      label: "Movie",
+                      label_method: :title, value_method: :id,
+                      include_blank: "Choose a movie" %>
+          <%= f.input :comment, placeholder: "Why is this movie here?" %>
+          <%= f.submit "Add bookmark", class: "btn btn-soft-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="d-flex align-items-baseline gap-3">
+        <h4 class="mb-0">Reviews</h4>
+        <% if @list.respond_to?(:average_rating) && @list.average_rating.present? %>
+          <span class="text-muted">Average: <strong><%= @list.average_rating %></strong>/5</span>
+        <% end %>
+      </div>
+
+      <% if @list.reviews.any? %>
+        <div class="review-list list-group my-3">
+          <% @list.reviews.order(created_at: :desc).each do |review| %>
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <div class="me-3">
+                  <div class="review-rating">🟢 <%= review.rating %>/5</div>
+                  <div class="mt-2"><%= simple_format(review.content) %></div>
+                  <small class="text-muted"><%= l(review.created_at, format: :short) %></small>
+                </div>
+                <div class="ms-3">
+                  <%= link_to "Delete", review_path(review),
+                      data: { turbo_method: :delete, turbo_confirm: "Delete this review?" },
+                      class: "btn btn-sm btn-outline-danger" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="form-card text-muted my-3">No reviews yet. Be the first!</div>
+      <% end %>
+    </div>
+
+    <div class="col-lg-6">
+      <h4 class="mb-3">Add a review</h4>
+      <div class="form-card">
+        <%= simple_form_for [@list, @review] do |f| %>
+          <%= f.input :rating, as: :integer, input_html: { min: 0, max: 5, step: 1 } %>
+          <%= f.input :content, as: :text, placeholder: "Write your thoughts..." %>
+          <%= f.submit "Add review", class: "btn btn-soft-primary" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

@@ -11,7 +11,7 @@ class BookmarksController < ApplicationController
     if @bookmark.save
       redirect_to @list, notice: "Bookmark added"
     else
-      render (@list.present? ? "lists/show : :new"), status: :unprocessable_entity
+      render(@list.present? ? "lists/show" : :new, status: :unprocessable_entity)
     end
   end
 

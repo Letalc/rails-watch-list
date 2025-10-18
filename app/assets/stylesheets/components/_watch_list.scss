@@ -1,0 +1,255 @@
+/* ===== Página de Lista ===== */
+
+.page-hero {
+  background: radial-gradient(1200px 400px at 10% -10%, $brand-primary-10, transparent),
+              linear-gradient(180deg, rgba(15,23,42,0.6), rgba(15,23,42,1));
+  border-radius: $radius-2xl;
+  padding: 24px 24px;
+  margin-bottom: 24px;
+  color: $brand-text;
+  box-shadow: $shadow-soft;
+  position: relative;
+  overflow: hidden;
+
+  .hero-title {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  .hero-actions .btn {
+    border-radius: 999px;
+  }
+}
+
+/* ===== Tarjetas de películas ===== */
+
+.movie-card.card {
+  background: $brand-card;
+  color: $brand-text;
+  border: 1px solid $brand-border;
+  border-radius: $radius-2xl;
+  box-shadow: $shadow-soft;
+
+  .card-img-top {
+    border-top-left-radius: $radius-2xl;
+    border-top-right-radius: $radius-2xl;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .card-title {
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .card-text {
+    color: $brand-muted;
+  }
+
+  .btn-outline-danger {
+    border-color: rgba($brand-danger, .35);
+    color: $brand-danger;
+
+    &:hover {
+      background: rgba($brand-danger, .08);
+      border-color: $brand-danger;
+      color: #fff;
+    }
+  }
+}
+
+/* Hover sutil */
+.movie-card {
+  transition: transform .15s ease, box-shadow .2s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 48px rgba(0,0,0,.35);
+  }
+}
+
+/* Badge de rating */
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba($brand-warning, .12);
+  border: 1px solid rgba($brand-warning, .3);
+  color: $brand-text;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: .85rem;
+}
+
+/* Nota del bookmark */
+.note {
+  background: rgba(255,255,255, .03);
+  border: 1px dashed $brand-border;
+  padding: .5rem .75rem;
+  border-radius: .75rem;
+  color: $brand-muted;
+}
+
+/* ===== Formularios ===== */
+.form-card {
+  background: $brand-soft;
+  border: 1px solid $brand-border;
+  border-radius: $radius-2xl;
+  padding: 20px;
+  box-shadow: $shadow-inset, $shadow-soft;
+
+  .hint {
+    color: $brand-muted;
+  }
+}
+
+.btn-soft-primary {
+  background: $brand-primary-10;
+  border: 1px solid rgba($brand-primary, .35);
+  color: $brand-text;
+  &:hover {
+    background: rgba($brand-primary, .18);
+    border-color: $brand-primary;
+    color: #fff;
+  }
+}
+
+/* ===== Reviews ===== */
+.review-list .list-group-item {
+  background: $brand-card;
+  color: $brand-text;
+  border: 1px solid $brand-border;
+  border-radius: 16px !important;
+  margin-bottom: 10px;
+}
+
+.review-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba($brand-success, .12);
+  border: 1px solid rgba($brand-success, .25);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* ===== Utilidades ===== */
+.text-muted { color: $brand-muted !important; }
+.divider {
+  height: 1px; width: 100%;
+  background: linear-gradient(90deg, transparent, $brand-border, transparent);
+  margin: 24px 0;
+}
+
+@media (max-width: 991.98px) {
+  .page-hero { padding: 16px; }
+}
+/* ===== ROOT (home) ===== */
+
+.home-wrap {
+  background:
+    radial-gradient(1200px 500px at -10% -10%, rgba($brand-primary, .25), transparent 60%),
+    radial-gradient(1000px 480px at 110% 0%, rgba(99, 102, 241, .18), transparent 60%),
+    linear-gradient(180deg, #0b1022 0%, #0f172a 60%);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* HERO */
+.home-hero {
+  padding: 56px 16px 24px;
+}
+
+.home-hero__content {
+  background: rgba(255,255,255, .02);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+  color: $brand-text;
+}
+
+.home-hero__title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: .2px;
+  margin-bottom: 8px;
+}
+
+.home-hero__subtitle {
+  color: $brand-muted;
+  margin-bottom: 16px;
+  max-width: 60ch;
+}
+
+.home-hero__cta .btn {
+  border-radius: 999px;
+}
+
+/* LIST CARD */
+.list-card.card {
+  background: $brand-card;
+  color: $brand-text;
+  border: 1px solid $brand-border;
+  border-radius: 18px;
+  box-shadow: $shadow-soft;
+  transition: transform .15s ease, box-shadow .2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  }
+}
+
+.list-card__badge {
+  font-size: .8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba($brand-primary, .12);
+  border: 1px solid rgba($brand-primary, .35);
+}
+
+/* Overlapping posters */
+.list-card__posters {
+  position: relative; height: 72px;
+}
+.list-card__poster {
+  position: absolute; top: 0; width: 52px; height: 72px;
+  object-fit: cover; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.list-card__poster--0 { left: 0;    z-index: 3; }
+.list-card__poster--1 { left: 28px; z-index: 2; filter: saturate(.85); }
+.list-card__poster--2 { left: 56px; z-index: 1; filter: grayscale(.15); }
+
+/* Empty state */
+.empty-state {
+  background: rgba(255,255,255,.02);
+  border: 1px dashed $brand-border;
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: $shadow-inset;
+  color: $brand-text;
+
+  h3 { font-weight: 700; margin-bottom: 8px; }
+}
+
+/* Botón suave */
+.btn-soft-primary {
+  background: $brand-primary-10;
+  border: 1px solid rgba($brand-primary, .35);
+  color: $brand-text;
+  &:hover {
+    background: rgba($brand-primary, .18);
+    border-color: $brand-primary;
+    color: #fff;
+  }
+}
