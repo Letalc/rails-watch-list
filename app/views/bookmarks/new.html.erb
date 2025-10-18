@@ -1,0 +1,11 @@
+<div class="container py-4">
+  <h1>Add bookmark to "<%= @list.name %>"</h1>
+  <div class="col-md-6 mt-3">
+    <%= simple_form_for [@list, @bookmark] do |f| %>
+      <%= f.association :movie, collection: Movie.order(:title), include_blank: "Choose a movie" %>
+      <%= f.input :comment, placeholder: "Why is this movie here?", hint: "At least 6 characters." %>
+      <%= f.submit "Add", class: "btn btn-primary" %>
+      <%= link_to "Cancel", list_path(@list), class: "btn btn-light ms-2" %>
+    <% end %>
+  </div>
+</div>

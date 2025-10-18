@@ -1,0 +1,50 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1><%= @list.name %></h1>
+    <%= link_to "Back", lists_path, class: "btn btn-light" %>
+  </div>
+
+  <hr/>
+
+  <h4 class="mb-3">Movies in this list</h4>
+
+  <% if @list.bookmarks.any? %>
+    <div class="row g-3">
+      <% @list.bookmarks.includes(:movie).each do |bookmark| %>
+        <% movie = bookmark.movie %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100">
+            <% if movie.poster_url.present? %>
+              <img src="<%= movie.poster_url %>" class="card-img-top" alt="<%= movie.title %> poster">
+            <% end %>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title"><%= movie.title %></h5>
+              <p class="card-text text-muted"><%= movie.overview %></p>
+              <p class="card-text"><strong>Rating:</strong> <%= movie.rating %></p>
+              <p class="card-text"><em>Note:</em> <%= bookmark.comment %></p>
+              <%= link_to "Remove", bookmark_path(bookmark),
+                          data: { turbo_method: :delete, turbo_confirm: "Remove this bookmark?" },
+                          class: "btn btn-sm btn-outline-danger mt-auto" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">No movies yet in this list.</p>
+  <% end %>
+
+  <hr class="my-4"/>
+
+  <div class="col-md-6">
+    <h4>Add a movie</h4>
+    <%= simple_form_for [@list, @bookmark] do |f| %>
+      <%= f.input :movie_id, as: :select,
+                  collection: Movie.order(:title),
+                  label_method: :title, value_method: :id,
+                  include_blank: "Choose a movie" %>
+      <%= f.input :comment, placeholder: "Why is this movie here?", hint: "At least 6 characters." %>
+      <%= f.submit "Add bookmark", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
