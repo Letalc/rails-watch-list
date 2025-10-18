@@ -12,7 +12,6 @@
     </div>
   </section>
 
-  <!-- GRID -->
   <section class="container">
     <% if @lists.any? %>
       <div class="row g-3">
@@ -25,7 +24,6 @@
                   <span class="list-card__badge"><%= pluralize(list.movies.count, "movie") %></span>
                 </div>
 
-                <%# Mini-preview de las primeras 3 portadas %>
                 <% posters = list.movies.limit(3).map(&:poster_url).compact %>
                 <% if posters.any? %>
                   <div class="list-card__posters mb-3">
