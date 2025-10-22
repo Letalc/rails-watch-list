@@ -70,3 +70,5 @@ gem "simple_form"
 gem "sassc-rails"
 
 gem "ostruct"
+
+gem "image_processing", "~> 1.14"

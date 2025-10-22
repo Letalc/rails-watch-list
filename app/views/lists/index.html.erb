@@ -51,4 +51,27 @@
       </div>
     <% end %>
   </section>
+  <div class="container py-4">
+  <h1 class="mb-4">Mis listas</h1>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <% @lists.each do |list| %>
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0">
+          <% if list.photo.attached? %>
+            <%= image_tag list.photo.variant(resize_to_fill: [600, 360]), class: "card-img-top", alt: "#{list.name} cover" %>
+          <% else %>
+            <%= image_tag "placeholder.jpg", class: "card-img-top", alt: "Sin imagen" %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title mb-2"><%= list.name %></h5>
+            <p class="card-text text-muted">Películas: <%= list.movies.count %></p>
+            <%= link_to "Ver", list_path(list), class: "btn btn-outline-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 </div>

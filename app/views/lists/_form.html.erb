@@ -1,0 +1,39 @@
+<div class="form-card p-4">
+  <%= simple_form_for list, html: { multipart: true } do |f| %>
+    <%= f.input :name,
+                required: true,
+                input_html: { autofocus: true, placeholder: "e.g. Drama, Classics, To rewatch" },
+                hint: "Debe ser único" %>
+
+    <%= f.input :photo,
+                as: :file,
+                label: "Imagen de portada",
+                input_html: { accept: "image/*" } %>
+
+    <% if list&.photo&.attached? %>
+      <div class="mt-2">
+        <small class="text-muted d-block mb-1">Imagen actual:</small>
+        <%= image_tag list.photo.variant(resize_to_fill: [300, 180]),
+                      class: "rounded object-fit-cover w-100",
+                      alt: "#{list.name} cover" %>
+        <small class="text-muted d-block mt-1">Si subes otra imagen, se reemplaza.</small>
+      </div>
+    <% end %>
+
+    <div class="d-flex gap-2 mt-3">
+      <%= f.submit (list.persisted? ? "Update list" : "Create list"), class: "btn btn-soft-primary" %>
+      <%= link_to "Cancel", (list.persisted? ? list_path(list) : lists_path), class: "btn btn-outline-secondary" %>
+    </div>
+  <% end %>
+
+  <% if list.errors.any? %>
+    <div class="alert alert-danger mt-3 mb-0" role="alert">
+      <strong><%= pluralize(list.errors.count, "error") %></strong> impidieron guardar la lista:
+      <ul class="mb-0 ps-3">
+        <% list.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

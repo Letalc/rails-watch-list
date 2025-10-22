@@ -11,30 +11,7 @@
 
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
-      <div class="form-card p-4">
-        <%= simple_form_for @list do |f| %>
-          <%= f.input :name,
-                      required: true,
-                      input_html: { autofocus: true, placeholder: "e.g. Drama, Classics, To rewatch" },
-                      hint: "Debe ser único" %>
-
-          <div class="d-flex gap-2 mt-3">
-            <%= f.submit "Create list", class: "btn btn-soft-primary" %>
-            <%= link_to "Cancel", lists_path, class: "btn btn-outline-secondary" %>
-          </div>
-        <% end %>
-
-        <% if @list.errors.any? %>
-          <div class="alert alert-danger mt-3 mb-0" role="alert">
-            <strong><%= pluralize(@list.errors.count, "error") %></strong> impidieron guardar la lista:
-            <ul class="mb-0 ps-3">
-              <% @list.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-      </div>
+      <%= render "form", locals: { list: @list } %>
     </div>
   </div>
 </div>
