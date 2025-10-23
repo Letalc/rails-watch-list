@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.list = @list
     if @review.save
-      redirect_to @list, notice: "Review added"
+      redirect_to @list, notice: "Review added."
     else
       @bookmark = Bookmark.new
       render "lists/show", status: :unprocessable_entity
@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
     review = Review.find(params[:id])
     list = review.list
     review.destroy
-    redirect_to list, notice: "Review removed"
+    redirect_to list, notice: "Review removed."
   end
 
   private

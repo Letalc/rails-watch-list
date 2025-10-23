@@ -15,6 +15,7 @@
         <% movie = bookmark.movie %>
         <div class="col-md-6 col-lg-4">
           <div class="card movie-card h-100">
+            <%# ... %>
             <div class="card-body">
               <h5 class="card-title"><%= movie.title %></h5>
               <% if movie.rating.present? %>
@@ -53,48 +54,6 @@
       </div>
     </div>
   </div>
-  <div class="container py-4">
-  <div class="mb-4">
-    <% if @list.photo.attached? %>
-      <%= image_tag @list.photo.variant(resize_to_fill: [1200, 500]),
-                    class: "img-fluid rounded-3 shadow-sm w-100 object-fit-cover",
-                    alt: "#{@list.name} cover" %>
-    <% else %>
-      <%= image_tag "placeholder.jpg", class: "img-fluid rounded-3 shadow-sm w-100", alt: "Sin imagen" %>
-    <% end %>
-  </div>
-
-  <div class="d-flex align-items-center justify-content-between mb-4">
-    <h1 class="mb-0"><%= @list.name %></h1>
-    <div>
-      <%= link_to "Editar", edit_list_path(@list), class: "btn btn-outline-secondary me-2" %>
-      <%= link_to "Volver", lists_path, class: "btn btn-light" %>
-    </div>
-  </div>
-
-  <% if @list.movies.any? %>
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-      <% @list.movies.each do |movie| %>
-        <div class="col">
-          <div class="card h-100 border-0 shadow-sm">
-            <%# Poster desde TMDB seed: %>
-            <% if movie.poster_url.present? %>
-              <%= image_tag movie.poster_url, class: "card-img-top", alt: movie.title %>
-            <% else %>
-              <%= image_tag "placeholder.jpg", class: "card-img-top", alt: "Sin poster" %>
-            <% end %>
-            <div class="card-body">
-              <h6 class="card-title"><%= movie.title %></h6>
-              <p class="card-text small text-muted mb-0"><%= truncate(movie.overview, length: 80) %></p>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p class="text-muted">Aún no has agregado películas a esta lista.</p>
-  <% end %>
-</div>
 
   <div class="divider"></div>
 
