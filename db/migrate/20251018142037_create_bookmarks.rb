@@ -7,6 +7,5 @@ class CreateBookmarks < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
-    add_index :bookmarks, [:movie_id, :list_id], unique: true
   end
 end

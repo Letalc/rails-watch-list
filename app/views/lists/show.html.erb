@@ -1,10 +1,24 @@
 <div class="container py-4">
+  <!-- Hero -->
   <div class="page-hero d-flex justify-content-between align-items-center">
     <h1 class="hero-title mb-0"><%= @list.name %></h1>
     <div class="hero-actions d-flex gap-2">
       <%= link_to "Back to lists", lists_path, class: "btn btn-light" %>
       <%= link_to "New list", new_list_path, class: "btn btn-primary" %>
     </div>
+  </div>
+
+  <!-- Paso 6: Cover grande de la List (banner) -->
+  <div class="list-cover-banner mb-4">
+    <% if @list.cover.attached? %>
+      <%= image_tag @list.cover.variant(resize_to_fill: [1200, 360]).processed,
+                    class: "list-cover-banner__img",
+                    alt: "#{@list.name} cover" %>
+    <% else %>
+      <%= image_tag "placeholder_cover.png",
+                    class: "list-cover-banner__img",
+                    alt: "placeholder" %>
+    <% end %>
   </div>
 
   <h4 class="mb-3">Movies in this list</h4>
@@ -15,7 +29,9 @@
         <% movie = bookmark.movie %>
         <div class="col-md-6 col-lg-4">
           <div class="card movie-card h-100">
-            <%# ... %>
+            <% if movie.poster_url.present? %>
+              <img src="<%= movie.poster_url %>" class="card-img-top" alt="<%= movie.title %> poster">
+            <% end %>
             <div class="card-body">
               <h5 class="card-title"><%= movie.title %></h5>
               <% if movie.rating.present? %>
@@ -39,6 +55,7 @@
 
   <div class="divider"></div>
 
+  <!-- Paso 6: Formulario de nuevo bookmark inline en SHOW -->
   <div class="row">
     <div class="col-lg-6">
       <h4 class="mb-3">Add a movie</h4>
@@ -48,8 +65,20 @@
                       label: "Movie",
                       label_method: :title, value_method: :id,
                       include_blank: "Choose a movie" %>
-          <%= f.input :comment, placeholder: "Why is this movie here?" %>
+          <%= f.input :comment, placeholder: "Why is this movie here?", hint: "At least 6 characters." %>
           <%= f.submit "Add bookmark", class: "btn btn-soft-primary" %>
+        <% end %>
+
+        <%# Errores del bookmark al re-renderizar %>
+        <% if @bookmark.errors.any? %>
+          <div class="alert alert-danger mt-3 mb-0" role="alert">
+            <strong><%= pluralize(@bookmark.errors.count, "error") %></strong> impidieron agregar el bookmark:
+            <ul class="mb-0 ps-3">
+              <% @bookmark.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
       </div>
     </div>
@@ -57,6 +86,7 @@
 
   <div class="divider"></div>
 
+  <!-- Reviews -->
   <div class="row">
     <div class="col-lg-6">
       <div class="d-flex align-items-baseline gap-3">
@@ -97,6 +127,18 @@
           <%= f.input :rating, as: :integer, input_html: { min: 0, max: 5, step: 1 } %>
           <%= f.input :content, as: :text, placeholder: "Write your thoughts..." %>
           <%= f.submit "Add review", class: "btn btn-soft-primary" %>
+        <% end %>
+
+        <%# Errores de review al re-renderizar %>
+        <% if @review.errors.any? %>
+          <div class="alert alert-danger mt-3 mb-0" role="alert">
+            <strong><%= pluralize(@review.errors.count, "error") %></strong> impidieron agregar el review:
+            <ul class="mb-0 ps-3">
+              <% @review.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
       </div>
     </div>

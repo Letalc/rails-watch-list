@@ -1,5 +1,4 @@
 <div class="new-list-page container py-5">
-  <!-- HERO -->
   <section class="page-hero mb-4 d-flex align-items-center justify-content-between">
     <div>
       <h1 class="hero-title mb-1">Create a new list</h1>
@@ -10,7 +9,6 @@
     </div>
   </section>
 
-  <!-- FORM CARD -->
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
       <div class="form-card p-4">
@@ -20,13 +18,16 @@
                       input_html: { autofocus: true, placeholder: "e.g. Drama, Classics, To rewatch" },
                       hint: "Debe ser único" %>
 
+          <%= f.input :cover, as: :file,
+                      label: "Cover (JPG/PNG/WEBP)",
+                      hint: "Máx 5 MB" %>
+
           <div class="d-flex gap-2 mt-3">
             <%= f.submit "Create list", class: "btn btn-soft-primary" %>
             <%= link_to "Cancel", lists_path, class: "btn btn-outline-secondary" %>
           </div>
         <% end %>
 
-        <!-- Mensajes de error globales (cuando no hay nombre o ya existe) -->
         <% if @list.errors.any? %>
           <div class="alert alert-danger mt-3 mb-0" role="alert">
             <strong><%= pluralize(@list.errors.count, "error") %></strong> impidieron guardar la lista:

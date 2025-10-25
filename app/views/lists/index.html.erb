@@ -20,13 +20,24 @@
         <% @lists.each do |list| %>
           <div class="col-12 col-sm-6 col-lg-4">
             <div class="list-card card h-100">
+              <!-- Paso 5: Cover/thumbnail de la List -->
+              <% if list.cover.attached? %>
+                <%= image_tag list.cover.variant(resize_to_fill: [624, 360]).processed,
+                              class: "list-card__cover",
+                              alt: "#{list.name} cover" %>
+              <% else %>
+                <%= image_tag "placeholder_cover.png",
+                              class: "list-card__cover",
+                              alt: "placeholder" %>
+              <% end %>
+
               <div class="list-card__body card-body d-flex flex-column">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                   <h5 class="card-title mb-0"><%= list.name %></h5>
                   <span class="list-card__badge"><%= pluralize(list.movies.count, "movie") %></span>
                 </div>
 
-                <%# Mini-preview de las primeras 3 portadas %>
+                <%# Mini-preview de las primeras 3 portadas (opcional, se mantiene) %>
                 <% posters = list.movies.limit(3).map(&:poster_url).compact %>
                 <% if posters.any? %>
                   <div class="list-card__posters mb-3">
